@@ -21,12 +21,13 @@ class ApplicationController < Sinatra::Base
   end
 
   get '/articles/:id/edit' do
-    @article_id = params[:id].to_i
+    @article_id = params["id"].to_i
     erb :edit
   end
 
   get '/articles/:id' do
-    @article_id = params[:id].to_i
+    # binding.pry
+    @article_id = params["id"].to_i
     erb :show
   end
 
@@ -35,14 +36,16 @@ class ApplicationController < Sinatra::Base
     redirect to "/articles/#{article.id}"
   end
 
-  get '/articles/:id/edit' do
-    @article_id = params[:id].to_i
-    erb :edit
-  end
-
   patch '/articles/:id' do
     article = Article.find_by(id:params[:id].to_i)
+    # binding.pry
     Article.update(title:params[:title], content:params[:content])
+    redirect to "/articles/#{article.id}"
+  end
+
+  delete '/articles/:id' do
+    Article.find_by(id:params["id"].to_i).destroy
+    redirect "/articles"
   end
 
 end

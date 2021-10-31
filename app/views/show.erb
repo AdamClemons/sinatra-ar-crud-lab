@@ -1,3 +1,8 @@
 Article Title: <%= Article.find_by(id: @article_id).title %>
 <br>
 Article Content: <%= Article.find_by(id: @article_id).content %>
+<br>
+<form action="/articles/<%= Article.find_by(id: @article_id).id %>" method="post">
+    <input id="hidden" type="hidden" name="_method" value="DELETE">
+    <input type="submit" id="delete" value="Delete">
+</form>
